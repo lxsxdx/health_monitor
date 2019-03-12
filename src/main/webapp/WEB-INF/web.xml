@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>admin</display-name>
+	<servlet>
+		<description></description>
+		<display-name>HelloServlet</display-name>
+		<servlet-name>HelloServlet</servlet-name>
+		<servlet-class>com.css.HelloServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HelloServlet</servlet-name>
+		<url-pattern>/HelloServlet</url-pattern>
+	</servlet-mapping>
+	
+	 <servlet>
+  	<servlet-name>springMvc0820</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<!-- 如果没有指定配置文件, 那么默认会去找/WEB-INF/springMvc0820-servlet.xml配置文件 -->
+  	<!-- 在企业中一般会指定配置文件的位置, 因为如果按照各个框架要求, 配置文件则会散乱的放在项目各处不利于维护, 所以需要统一指定配置文件位置 -->
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:spring-mvc.xml</param-value>
+  	</init-param>
+  	<!-- 配置tomcat启动后就加载此servlet -->
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>springMvc0820</servlet-name>
+  	<!-- 
+  	什么样的路径可以进入DispatcherServlet中:
+  		*.action 拦截以.aciton结尾的   
+  		/	     拦截所有,但是不包括.jsp的文件
+  		/*	  拦截所有, 包括js, csss, png, jsp等等, 请求DispatcherServlet后就不放行, 也就是所有资源都无法访问, 所以不能这么配置
+  	 -->
+  	<url-pattern>*.action</url-pattern>
+  </servlet-mapping>
+  <!-- log4j配置 --> 
+<!--   <context-param>
+   <param-name>log4jConfigLocation</param-name> 
+   <param-value>classpath:log4j.properties</param-value>
+    </context-param> 
+  <listener> 
+  <listener-class>org.springframework.web.util.Log4jConfigListener </listener-class> </listener> -->
+   <!-- Spring容器加载所有的配置文件的路径 --> 
+  <context-param> 
+  <param-name>contextConfigLocation</param-name> 
+  <param-value> classpath:ApplicationContext.xml</param-value> 
+  </context-param> 
+  <listener> 
+  <listener-class>org.springframework.web.context.ContextLoaderListener </listener-class> 
+  </listener>
+</web-app>

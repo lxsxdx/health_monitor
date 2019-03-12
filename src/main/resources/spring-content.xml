@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/task  
+        http://www.springframework.org/schema/task/spring-task-4.0.xsd  "> 
+        <!-- 扫描包 --> <context:component-scan base-package="com.maven4web" /> 
+        <context:annotation-config /> <mvc:annotation-driven /> <!-- 数据源 --> <context:property-placeholder location="classpath*:/database.properties"
+        ignore-unresolvable="true" /> <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+        <property name="driverClassName" value="${dataSource.driverClassName}" />
+         <property name="url" value="${dataSource.url}" />
+          <property name="username" value="${dataSource.username}" /> 
+          <property name="password" value="${dataSource.password}" /> </bean>
+           <!-- 会话工厂 --> <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+           <property name="dataSource" ref="dataSource"></property> 
+           <property name="configLocation" value="classpath:mybatis-config.xml"></property> 
+           <property name="mapperLocations" value="classpath:com/maven4web/mapper/impl/*.xml"></property> </bean> <!-- 事务管理器 --> 
+        <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> <property name="dataSource" ref="dataSource" /> </bean> <!-- 事务注解驱动，注解@Transactional的类和方法将具有事务性 --> 
+        <tx:annotation-driven transaction-manager="txManager" /> <!-- spring和mybatis的整合 --> <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> <property name="basePackage" value="com.maven4web.mapper"></property> </bean> </beans>

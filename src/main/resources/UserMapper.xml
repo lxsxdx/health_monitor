@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+mybatis动态代理实现规则:
+	a) 要求映射文件中的namespace必须等于接口的全路径名称
+	b) 要求映射文件中的id必须等于接口方法的方法名
+	c) 要求映射文件中parameterType中的类型必须等于接口的方法的传入参数类型
+	d) 要求映射为问及那中resultType中的类型必须等于接口方法的返回值类型
+  -->
+<mapper namespace="com.css.mapper.UserMapper">
+
+	<select id="findUserById" parameterType="int" resultType="com.css.pojo.User">
+		select * from fs_user where id=#{id}
+	</select>
+	
+	<select id="findUserByUserName" parameterType="java.lang.String" resultType="com.css.pojo.User">
+		select * from fs_user where username like '%${value}%'
+	</select>
+	
+	
+</mapper>
